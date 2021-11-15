@@ -14,3 +14,4 @@
 - Prisma
 - PlanetScale
 - Tailwind CSS
+- Cloudinary

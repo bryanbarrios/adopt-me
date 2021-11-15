@@ -9,3 +9,148 @@ datasource db {
   shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
   referentialIntegrity = "prisma"
 }
+
+model User {
+  id          String      @id @default(uuid())
+  firstName   String
+  lastName    String
+  email       String
+  phoneNumber String?
+  adoptedPets Pet[]
+  savedPets   UsersPets[]
+  role        Role        @default(USER)
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model UsersPets {
+  User   User   @relation(fields: [userId], references: [id])
+  userId String
+  pet    Pet    @relation(fields: [petId], references: [id])
+  petId  String
+
+  @@id([userId, petId])
+}
+
+model PetCategory {
+  id          String   @id @default(uuid())
+  name        String
+  description String?  @db.Text
+  breeds      Breed[]
+  pets        Pet[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Breed {
+  id            String      @id @default(uuid())
+  name          String
+  description   String      @db.Text
+  pets          Pet[]
+  category      PetCategory @relation(fields: [petCategoryId], references: [id])
+  petCategoryId String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Photo {
+  id               String   @id @default(uuid())
+  originalFilename String
+  publicId         String   @unique
+  format           String
+  url              String
+  secureUrL        String
+  pet              Pet?     @relation(fields: [petId], references: [id])
+  petId            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Pet {
+  id             String      @id @default(uuid())
+  name           String
+  bio            String?     @db.Text
+  address        String?
+  adoptionReason String      @db.Text
+  color          String?
+  age            Age
+  size           Size
+  gender         Gender
+  coatLength     CoatLength
+  photos         Photo[]
+  category       PetCategory @relation(fields: [petCategoryId], references: [id])
+  petCategoryId  String
+  breed          Breed       @relation(fields: [breedId], references: [id])
+  breedId        String
+  user           User        @relation(fields: [userId], references: [id])
+  userId         String
+  usersPets      UsersPets[]
+  location       City        @relation(fields: [cityId], references: [id])
+  cityId         String
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+enum Status {
+  Available
+  Adopted
+}
+
+enum Age {
+  Young
+  Adult
+  Senior
+}
+
+enum Size {
+  Small
+  Medium
+  Large
+  ExtraLarge
+}
+
+enum Gender {
+  Male
+  Female
+}
+
+enum CoatLength {
+  Hairless
+  Short
+  Medium
+  Long
+}
+
+model Country {
+  id        String   @id @default(uuid())
+  name      String
+  states    State[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model State {
+  id        String   @id @default(uuid())
+  name      String
+  country   Country  @relation(fields: [countryId], references: [id])
+  countryId String
+  cities    City[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model City {
+  id        String   @id @default(uuid())
+  name      String
+  state     State    @relation(fields: [stateId], references: [id])
+  stateId   String
+  pets      Pet[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
