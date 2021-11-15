@@ -1,11 +1,32 @@
 {
   "name": "adopt-me",
+  "description": "Find and adopt your next pet. Don't buy, adopt!",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bryanbarrios/adopt-me.git"
+  },
+  "keywords": [
+    "nextjs",
+    "react",
+    "prisma",
+    "planetscale",
+    "tailwindcss",
+    "vercel"
+  ],
+  "author": "Bryan Barrios <bryansbarrios@outlook.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bryanbarrios/adopt-me/issues"
+  },
+  "homepage": "https://github.com/bryanbarrios/adopt-me#readme",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
   },
   "dependencies": {
     "next": "12.0.3",
@@ -13,10 +34,23 @@
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^14.1.0",
+    "@commitlint/config-conventional": "^14.1.0",
     "@types/node": "16.11.7",
     "@types/react": "17.0.34",
-    "eslint": "7.32.0",
-    "eslint-config-next": "12.0.3",
-    "typescript": "4.4.4"
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^7.32.0",
+    "eslint-config-next": "^12.0.3",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.0",
+    "lint-staged": "^12.0.1",
+    "postcss": "^8.3.11",
+    "prettier": "^2.4.1",
+    "prisma": "^3.4.2",
+    "tailwindcss": "^2.2.19",
+    "typescript": "^4.4.4"
   }
 }
