@@ -11,7 +11,6 @@
 ## Stack
 
 - NextJS / Typescript
-- Firebase Auth
 - Prisma
 - PlanetScale
 - Tailwind CSS
